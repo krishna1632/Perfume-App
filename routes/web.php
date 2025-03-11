@@ -4,6 +4,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,6 +34,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/roles/{id}/edit', [RoleController::class, 'edit'])->name('roles.edit');
     Route::put('/roles/{id}', [RoleController::class, 'update'])->name('roles.update');
     Route::delete('/roles/{id}', [RoleController::class, 'destroy'])->name('roles.destroy');
+
+
+    // Users Routes
+
+    Route::get('user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
+    Route::post('user/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::get('/users', [UserController::class, 'index'])->name('user.list'); // ✅ Ensure this exists
+    
 });
 
 require __DIR__ . '/auth.php';
