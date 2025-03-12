@@ -39,9 +39,9 @@ Route::middleware('auth')->group(function () {
     // Users Routes
 
     Route::get('user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
-    Route::post('user/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::put('user/{id}', [UserController::class, 'update'])->name('user.update');
     Route::get('/users', [UserController::class, 'index'])->name('user.list'); // ✅ Ensure this exists
-    
+    Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('user.destroy');
 });
 
 require __DIR__ . '/auth.php';

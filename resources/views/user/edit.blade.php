@@ -1,59 +1,61 @@
-<x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Edit User') }}
-            </h2>
-            <a href="{{ route('user.list') }}" class="bg-slate-700 text-sm rounded-md px-4 py-2 text-white">
-                <i class="fas fa-arrow-left"></i> Back
-            </a>
+@extends('layouts.admin')
+
+@section('title', 'Edit User')
+
+@section('content')
+    <h1 class="mt-4">Edit User</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('user.list') }}">Users</a></li>
+        <li class="breadcrumb-item active">Edit User</li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-user-edit me-1"></i> Edit User Details
         </div>
-    </x-slot>
+        <div class="card-body">
+            <form action="{{ route('user.update', $users->id) }}" method="POST">
+                @csrf
+                @method('PUT')
 
-    <div class="py-12">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <form action="{{ route('user.update', $users->id) }}" method="POST">
-                        @csrf
-                        
-
-                        <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2">Name</label>
-                            <input type="text" name="name" value="{{ $users->name }}" 
-                                class="w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-indigo-200 px-3 py-2">
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2">Email</label>
-                            <input type="email" name="email" value="{{ $users->email }}" 
-                                class="w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-indigo-200 px-3 py-2" disabled>
-                        </div>
-
-                        <div class="mb-4">
-    <label class="block text-gray-700 text-sm font-bold mb-2">Roles</label>
-    @foreach($roles as $role)
-        <div class="flex items-center mb-2">
-            <input type="checkbox" name="roles[]" value="{{ $role->id }}" 
-                class="mr-2 border-gray-300 rounded-md"
-                @if($users->roles && $users->roles->pluck('id')->contains($role->id)) checked @endif>
-            <span class="text-gray-900">{{ $role->name }}</span>
-        </div>
-    @endforeach
-</div>
-
-
-
-
-
-                        <div class="flex justify-end">
-                            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">
-                                Update User
-                            </button>
-                        </div>
-                    </form>
+                <div class="mb-3">
+                    <label class="form-label">Name</label>
+                    <input type="text" name="name" value="{{ old('name', $users->name) }}" class="form-control"
+                        required>
                 </div>
-            </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" value="{{ old('email', $users->email) }}" class="form-control"
+                        required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Roles</label>
+                    <div class="border p-3 rounded">
+                        @foreach ($roles as $role)
+                            <div class="form-check">
+                                <input {{ $hasRoles->contains($role->id) ? 'checked' : '' }} type="checkbox"
+                                    id="role-{{ $role->id }}" name="roles[]" value="{{ $role->name }}"
+                                    class="form-check-input" @if ($users->roles->contains('id', $role->id)) checked @endif>
+                                <label class="form-check-label" for="role-{{ $role->id }}">{{ $role->name }}</label>
+                            </div>
+                        @endforeach
+
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <a href="{{ route('user.list') }}" class="btn btn-secondary me-2">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Update User
+                    </button>
+                </div>
+            </form>
+
         </div>
     </div>
-</x-app-layout>
+@endsection
