@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserProfileController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -37,11 +39,23 @@ Route::middleware('auth')->group(function () {
 
 
     // Users Routes
-
     Route::get('user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
     Route::put('user/{id}', [UserController::class, 'update'])->name('user.update');
     Route::get('/users', [UserController::class, 'index'])->name('user.list'); // ✅ Ensure this exists
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+
+    // Product Routes
+    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+    Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+    Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+    Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
+    Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
+    Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
+    Route::resource('products', ProductController::class);
 });
+
+// user Register management
+
+Route::get('/user_register', [UserProfileController::class, 'index'])->name('userregister.index');
 
 require __DIR__ . '/auth.php';

@@ -65,6 +65,23 @@
                     @endcan
                 </nav>
             </div>
+            <!-- Products Dropdown -->
+            <a class="nav-link collapsed py-3 px-4" href="#" data-bs-toggle="collapse"
+                data-bs-target="#collapseProducts" aria-expanded="false" aria-controls="collapseProducts">
+                <div class="sb-nav-link-icon">
+                    <i class="fas fa-box fa-lg"></i>
+                </div>
+                Products
+                <div class="sb-sidenav-collapse-arrow">
+                    <i class="fas fa-angle-down"></i>
+                </div>
+            </a>
+            <div class="collapse" id="collapseProducts" aria-labelledby="headingThree"
+                data-bs-parent="#sidenavAccordion">
+                <nav class="sb-sidenav-menu-nested nav text-base">
+                    <a class="nav-link py-2 px-4" href="{{ route('products.index') }}">All Products</a>
+                </nav>
+            </div>
         </div>
     </div>
 </nav>
