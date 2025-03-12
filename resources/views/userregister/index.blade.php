@@ -207,8 +207,7 @@
 
             <!-- Dropdown Menu -->
             <div class="dropdown-menu-custom">
-                <p class="text-muted">New customer? <a href="{{route('userregister.index')}}" class="text-primary">Register</a></p>
-                <hr>
+               
                 <a href="#" class="dropdown-item"><i class="bi bi-person"></i> My Profile</a>
                 
                 <a href="#" class="dropdown-item"><i class="bi bi-box"></i> Orders</a>
@@ -225,6 +224,56 @@
             </div>
         </div>
     </header>
+
+
+    <!-- ******************************************* Main ********************************************** -->
+
+    <main class="container w-75 mt-5">
+    <div class="row justify-content-center">
+        <!-- Image Column -->
+        <div class="col-md-6 d-flex justify-content-center">
+            <img src="assests/register.avif" alt="Register Image" class="img-fluid w-100 rounded">
+        </div>
+
+        <!-- Form Column -->
+        <div class="col-md-6">
+            <h2 class="text-center mb-4">Register</h2>
+            <form method="POST" action="/register">
+                <!-- Name -->
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input id="name" class="form-control" type="text" name="name" required autofocus>
+                </div>
+
+                <!-- Email Address -->
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input id="email" class="form-control" type="email" name="email" required>
+                </div>
+
+                <!-- Password -->
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input id="password" class="form-control" type="password" name="password" required>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="mb-3">
+                    <label for="password_confirmation" class="form-label">Confirm Password</label>
+                    <input id="password_confirmation" class="form-control" type="password" name="password_confirmation" required>
+                </div>
+
+                <!-- Buttons (Register & Login) -->
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary w-45">Register</button>
+                    <a href="/login" class="btn btn-secondary w-45">Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+
 
 </body>
 
