@@ -174,6 +174,18 @@
             font-size: 12px;
             color: gray;
         }
+ .d-none { 
+    display: none; 
+}
+        .active-btn { 
+            background-color:orange !important; color: #fff !important; border: none !important;
+         }
+
+         input:focus {
+    border-color: orange !important;
+    box-shadow: 0 0 5px rgba(231, 201, 144, 0.5) !important;
+    outline: none !important;
+}
 
     </style>
 </head>
@@ -232,76 +244,82 @@
 
     <!-- ******************************************* Main ********************************************** -->
 
-    <main class="container w-75 mt-5">
-    <div class="row justify-content-center">
-         <!-- Buttons (Register & Login) - Left Aligned & Close Together -->
-        <div class="d-flex gap-2 mb-4">
-            <button class="btn btn-primary px-4 py-2">Register</button>
-           
-            <a href="{{route('userregister.login')}}" class="btn btn-outline-primary px-4 py-2">Login</a>
+    <main class="container w-75 mt-5 mb-5">
+        <div class="row justify-content-center">
+            <!-- Buttons (Register & Login) -->
+            <div class="d-flex gap-2 mb-3">
+                <button id="registerBtn" class="btn px-4 py-2" onclick="showRegister()">Register</button>
+                <a id="loginBtn" href="?login=true" class="btn px-4 py-2">Login</a>
+            </div>
+            <hr>
+
+            <!-- Image Column -->
+            <div class="col-md-6 d-flex justify-content-center">
+                <img src="assests/register.avif" alt="Register Image" class="img-fluid w-100 rounded">
+            </div>
+
+            <!-- Form Column -->
+            <div class="col-md-6">
+                <h2 id="formTitle" class="text-center mb-4">Register</h2>
+                
+                <!-- Register Form -->
+                <form id="registerForm" method="POST" action="/register">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                        <input id="name" class="form-control" type="text" name="name" required autofocus>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <input id="email" class="form-control" type="email" name="email" required oninput="showVerifyButton()">
+                            <button id="verifyBtn" class="btn btn-primary d-none" onclick="showOtpField()">Verify</button>
+                        </div>
+                    </div>
+                    <div class="mb-3 d-none" id="otpDiv">
+                        <label for="otp" class="form-label">Enter OTP <span class="text-danger">*</span></label>
+                        <input id="otp" class="form-control" type="text" name="otp" maxlength="4" placeholder="Enter 4-digit OTP">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                        <input id="password" class="form-control" type="password" name="password" required>
+                        <small class="password-hint">Password must be at least 8 characters long.</small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password_confirmation" class="form-label">Confirm Password <span class="text-danger">*</span></label>
+                        <input id="password_confirmation" class="form-control" type="password" name="password_confirmation" required>
+                    </div>
+                    <button type="submit" class="btn  w-100" style="background-color:orange; color:#fff;">Register</button>
+                </form>
+
+                <!-- Login Form (Hidden by Default) -->
+                <form id="loginForm" class="d-none" method="POST" action="/login">
+                    <div class="mb-3">
+                        <label for="loginEmail" class="form-label">Email <span class="text-danger">*</span></label>
+                        <input id="loginEmail" class="form-control" type="email" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="loginPassword" class="form-label">Password <span class="text-danger">*</span></label>
+                        <input id="loginPassword" class="form-control" type="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn  w-100"style="background-color:orange; color:#fff;">Login</button>
+
+                     <!-- Forgot Password Link -->
+                    <div class="text-center mt-2">
+                        <a href="/forgot-password" class="text-primary">Forgot Password?</a>
+                    </div>
+
+                </form>
+            </div>
         </div>
-        <!-- Image Column -->
-        <div class="col-md-6 d-flex justify-content-center">
-            <img src="assests/register.avif" alt="Register Image" class="img-fluid w-100 rounded">
-        </div>
-
-        <!-- Form Column -->
-        <div class="col-md-6">
-            <h2 class="text-center mb-4">Register </h2>
-            <form method="POST" action="/register">
-                <!-- Name -->
-                <div class="mb-3">
-                    <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
-                    <input id="name" class="form-control" type="text" name="name" required autofocus>
-                </div>
-
-       <!-- Email Address with Verify Button -->
-<div class="mb-3">
-    <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-    <div class="input-group">
-        <input id="email" class="form-control" type="email" name="email" required oninput="showVerifyButton()" onblur="checkEmailComplete()">
-        <button id="verifyBtn" class="btn btn-primary d-none" onclick="showOtpField()">Verify</button>
-    </div>
-</div>
-
-<!-- OTP Input (Initially Hidden) -->
-<div class="mb-3 d-none" id="otpDiv">
-    <label for="otp" class="form-label">Enter OTP <span class="text-danger">*</span></label>
-    <input id="otp" class="form-control" type="text" name="otp" maxlength="4" placeholder="Enter 4-digit OTP">
-</div>
-
-                <!-- Password -->
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
-                    <input id="password" class="form-control" type="password" name="password" required>
-                    <small class="password-hint">Password must be at least 8 characters long.</small>
-                </div>
-
-                <!-- Confirm Password -->
-                <div class="mb-3">
-                    <label for="password_confirmation" class="form-label">Confirm Password <span class="text-danger">*</span></label>
-                    <input id="password_confirmation" class="form-control" type="password" name="password_confirmation" required>
-                </div>
-
-                <!-- Buttons (Register & Login) -->
-                <div class="d-flex justify-content-between">
-                    <button type="submit" class="btn btn-primary w-45">Register</button>
-                   
-                </div>
-            </form>
-        </div>
-    </div>
-</main>
-
+    </main>
 
 
 </body>
 <script>
-    function showVerifyButton() {
+function showVerifyButton() {
         let email = document.getElementById("email").value;
         let verifyBtn = document.getElementById("verifyBtn");
 
-        // Jab email likhna shuru kare, toh button show karo
         if (email.length > 5 && email.includes("@") || email.includes(".")) {
             verifyBtn.classList.remove("d-none");
         } else {
@@ -310,13 +328,46 @@
     }
 
     function showOtpField() {
-        let verifyBtn = document.getElementById("verifyBtn");
-        let otpDiv = document.getElementById("otpDiv");
-
-        // Verify button ko gayab karo aur OTP field dikhao
-        verifyBtn.classList.add("d-none");
-        otpDiv.classList.remove("d-none");
+        document.getElementById("verifyBtn").classList.add("d-none");
+        document.getElementById("otpDiv").classList.remove("d-none");
     }
+
+    function checkLoginStatus() {
+        let urlParams = new URLSearchParams(window.location.search);
+        let isLogin = urlParams.has("login");
+
+        let registerForm = document.getElementById("registerForm");
+        let loginForm = document.getElementById("loginForm");
+        let formTitle = document.getElementById("formTitle");
+
+        let registerBtn = document.getElementById("registerBtn");
+        let loginBtn = document.getElementById("loginBtn");
+
+        if (isLogin) {
+            registerForm.classList.add("d-none");
+            loginForm.classList.remove("d-none");
+            formTitle.innerText = "Login";
+
+            // Login button blue & Register button normal
+            loginBtn.classList.add("active-btn");
+            registerBtn.classList.remove("active-btn");
+        } else {
+            registerForm.classList.remove("d-none");
+            loginForm.classList.add("d-none");
+            formTitle.innerText = "Register";
+
+            // Register button blue & Login button normal
+            registerBtn.classList.add("active-btn");
+            loginBtn.classList.remove("active-btn");
+        }
+    }
+
+    function showRegister() {
+        window.location.href = window.location.pathname; 
+    }
+
+    window.onload = checkLoginStatus;
 </script>
+
 
 </html>
