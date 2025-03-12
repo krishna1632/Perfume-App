@@ -236,9 +236,9 @@
     <div class="row justify-content-center">
          <!-- Buttons (Register & Login) - Left Aligned & Close Together -->
         <div class="d-flex gap-2 mb-4">
-            <button class="btn btn-primary px-4 py-2">Register</button>
+            <button class="btn btn-primary px-4 py-2">Login</button>
+            <a href="{{route('userregister.index')}}" class="btn btn-outline-primary px-4 py-2">Register</a>
            
-            <a href="{{route('userregister.login')}}" class="btn btn-outline-primary px-4 py-2">Login</a>
         </div>
         <!-- Image Column -->
         <div class="col-md-6 d-flex justify-content-center">

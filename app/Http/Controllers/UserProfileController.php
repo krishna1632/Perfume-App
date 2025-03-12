@@ -13,6 +13,10 @@ class UserProfileController extends Controller
     {
         return view('userregister.index');
     }
+    public function index1()
+    {
+        return view('userregister.login');
+    }
 
     /**
      * Show the form for creating a new resource.

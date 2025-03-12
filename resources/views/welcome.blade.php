@@ -177,7 +177,7 @@
 <body>
 
     <!-- ********************************************** Header **************************************************** -->
-    <header class="shadow-sm">
+    <header class="shadow-sm sticky-top " style="z-index:1000">
         <div class="d-flex justify-content-between align-items-center px-5"
             style="height: 85px; background-color: rgb(255, 255, 255);">
             <!-- Logo -->
