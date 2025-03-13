@@ -227,16 +227,16 @@
                             </svg>
                         @endif
                     </div>
-                    <h5 class="mt-3 fw-bold text-primary">Hello, {{ $user->name }}</h5>
+                    <h5 class="mt-3 fw-bold" style="color: orange">Hello, {{ $user->name }}</h5>
                     <hr>
                     <ul class="list-group list-group-flush text-start mb-3">
-                        <li class="list-group-item"><a href="#" class="text-decoration-none d-block">📦 My
+                        <li class="list-group-item"><a href="#" class="text-decoration-none d-block" style="color: black">📦 My
                                 Orders</a></li>
-                        <li class="list-group-item"><a href="#" class="text-decoration-none d-block">🛒
+                        <li class="list-group-item"><a href="#" class="text-decoration-none d-block" style="color: black">🛒
                                 Cart</a></li>
-                        <li class="list-group-item"><a href="#" class="text-decoration-none d-block">❤️
+                        <li class="list-group-item"><a href="#" class="text-decoration-none d-block" style="color: black">❤️
                                 Wishlist</a></li>
-                        <li class="list-group-item"><a href="#" class="text-decoration-none d-block">🔑 Change
+                        <li class="list-group-item"><a href="#" class="text-decoration-none d-block" style="color: black">🔑 Change
                                 Password</a></li>
                     </ul>
                     <form method="POST" action="{{ route('logout') }}">
@@ -259,7 +259,7 @@
             <!-- Main Content (Personal Info) -->
             <div class="col-md-8 col-lg-9">
                 <div class="card p-4 shadow-sm">
-                    <h4 class="mb-3 text-primary"><i class="bi bi-person-circle"></i> Personal Info</h4>
+                    <h4 class="mb-3" style="color: orange"><i class="bi bi-person-circle" style="color: black"></i> Personal Info</h4>
                     <hr>
                     <form method="POST" action="{{ route('user.update', $user->id) }}"
                         enctype="multipart/form-data">
@@ -335,7 +335,7 @@
                             @endif
                         </div>
 
-                        <button type="submit" class="btn btn-primary w-100 rounded-md"><i class="bi bi-save"></i>
+                        <button type="submit" class="btn w-100 rounded-md text-white" style="background-color: rgb(255, 111, 0)"><i class="bi bi-save"></i>
                             Update Profile</button>
                     </form>
                 </div>
