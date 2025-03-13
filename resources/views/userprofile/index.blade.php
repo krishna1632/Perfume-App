@@ -239,9 +239,10 @@
                 <div class="card p-4 shadow-sm">
                     <h4 class="mb-3 text-primary"><i class="bi bi-person-circle"></i> Personal Info</h4>
                     <hr>
-                    <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('user.update', $user->id) }}"
+                        enctype="multipart/form-data">
                         @csrf
-                        @method('POST')
+                        @method('PUT')
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="name" class="form-label"><i class="bi bi-person"></i> Full
@@ -297,11 +298,23 @@
                                 Picture</label>
                             <input type="file" class="form-control" id="profile_pic" name="profile_pic"
                                 onchange="previewImage(event)">
+                            @if ($user->profile_pic)
+                                <img id="profile_preview" src="{{ asset('storage/' . $user->profile_pic) }}"
+                                    alt="Profile Picture" class="profile-picture mt-2"
+                                    style="width: 100px; height: 100px;">
+                            @else
+                                <svg id="profile_preview" class="profile-picture mt-2"
+                                    xmlns="http://www.w3.org/2000/svg" width="100" height="100"
+                                    fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                    <path fill-rule="evenodd"
+                                        d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                                </svg>
+                            @endif
                         </div>
 
                         <button type="submit" class="btn btn-primary w-100 rounded-md"><i class="bi bi-save"></i>
-                            Update
-                            Profile</button>
+                            Update Profile</button>
                     </form>
                 </div>
             </div>

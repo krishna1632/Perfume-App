@@ -74,19 +74,36 @@ class UserController extends Controller implements HasMiddleware
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:3',
             'email' => 'required|email|unique:users,email,' . $id,
-            'roles' => 'array', // ✅ Fix: Ensure roles is an array
+            'phone' => 'nullable|string|max:15',
+            'address' => 'nullable|string|max:255',
+            'gender' => 'nullable|in:male,female,other',
+            'profile_pic' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'roles' => 'array', // Ensure roles is an array
         ]);
 
         if ($validator->fails()) {
             return redirect()->route('user.edit', $id)->withInput()->withErrors($validator);
         }
 
-        $users->update([
+        $data = [
             'name' => $request->name,
             'email' => $request->email,
-        ]);
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'gender' => $request->gender,
+        ];
 
-        $users->roles()->detach(); // ✅ Remove old roles
+        // Handle profile picture upload
+        if ($request->hasFile('profile_pic')) {
+            $profilePic = $request->file('profile_pic');
+            $profilePicName = time() . '.' . $profilePic->getClientOriginalExtension();
+            $profilePic->storeAs('public/profile_pics', $profilePicName);
+            $data['profile_pic'] = 'profile_pics/' . $profilePicName;
+        }
+
+        $users->update($data);
+
+        $users->roles()->detach(); // Remove old roles
         if ($request->has('roles')) {
             $users->syncRoles($request->roles);
         }

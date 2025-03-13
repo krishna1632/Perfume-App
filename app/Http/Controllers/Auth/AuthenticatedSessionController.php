@@ -29,12 +29,23 @@ class AuthenticatedSessionController extends Controller
 
         $user = Auth::user();
 
-        // Check if the user has 'superadmin' or 'admin' role
-        if ($user->hasRole(['Superadmin', 'Admin'])) {
-            return redirect()->intended(route('dashboard', absolute: false));
+        // Get the intended URL (if any)
+        $intendedUrl = redirect()->intended()->getTargetUrl();
+
+        // Check if the intended URL is userprofile.index
+        if ($intendedUrl === route('userprofile.index')) {
+            // Redirect based on role
+            if ($user->hasRole(['Superadmin', 'Admin'])) {
+                return redirect()->route('dashboard');
+            }
+            return redirect()->route('userprofile.index');
         }
 
-        // Redirect other users to welcome page
+        // Default role-based redirection
+        if ($user->hasRole(['Superadmin', 'Admin'])) {
+            return redirect()->route('dashboard');
+        }
+
         return redirect('/');
     }
 
