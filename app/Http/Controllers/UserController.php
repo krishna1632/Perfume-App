@@ -82,7 +82,7 @@ class UserController extends Controller implements HasMiddleware
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('user.edit', $id)->withInput()->withErrors($validator);
+            return redirect()->back()->withInput()->withErrors($validator);
         }
 
         $data = [
@@ -103,12 +103,20 @@ class UserController extends Controller implements HasMiddleware
 
         $users->update($data);
 
-        $users->roles()->detach(); // Remove old roles
-        if ($request->has('roles')) {
-            $users->syncRoles($request->roles);
+        // Sync roles only if the user is Superadmin or Admin
+        if (auth()->user()->hasAnyRole(['Superadmin', 'Admin'])) {
+            $users->roles()->detach(); // Remove old roles
+            if ($request->has('roles')) {
+                $users->syncRoles($request->roles);
+            }
         }
 
-        return redirect()->route('user.list')->with('success', 'User updated successfully.');
+        // Redirect based on role
+        if (auth()->user()->hasAnyRole(['Superadmin', 'Admin'])) {
+            return redirect()->route('user.list')->with('success', 'User updated successfully.');
+        }
+
+        return redirect()->route('userprofile.index')->with('success', 'Profile updated successfully.');
     }
 
     /**

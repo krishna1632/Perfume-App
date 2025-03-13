@@ -132,6 +132,28 @@
             background-color: #6c757d;
             border: none;
         }
+
+        /* Toast Alert Styles */
+        /* Custom Toast Styles */
+        .toast {
+            background-color: #28a745;
+            /* Green background */
+            color: white;
+            /* White text */
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .toast-header {
+            background-color: #218838;
+            /* Darker green for header */
+            color: white;
+            border-bottom: none;
+        }
+
+        .toast-body {
+            padding: 1rem;
+        }
     </style>
 </head>
 
@@ -321,6 +343,22 @@
         </div>
     </main>
 
+    <!-- Toast for Success Message -->
+    <div aria-live="polite" aria-atomic="true" class="position-fixed top-0 end-0 p-3" style="z-index: 10000;">
+        <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+            data-bs-delay="3000">
+            <div class="toast-header bg-success text-white">
+                <strong class="me-auto">Success</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Profile updated successfully!
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function previewImage(event) {
             var reader = new FileReader();
@@ -337,6 +375,15 @@
                 document.getElementById('delete-form').submit();
             }
         }
+
+        // Show toast if there is a success message
+        document.addEventListener('DOMContentLoaded', function() {
+            @if (session('success'))
+                var toastEl = document.getElementById('successToast');
+                var toast = new bootstrap.Toast(toastEl);
+                toast.show();
+            @endif
+        });
     </script>
 </body>
 
