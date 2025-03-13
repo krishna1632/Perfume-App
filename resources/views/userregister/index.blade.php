@@ -293,6 +293,7 @@
 
                 <!-- Login Form (Hidden by Default) -->
                 <form id="loginForm" class="d-none" method="POST" action="/login">
+                    @csrf
                     <div class="mb-3">
                         <label for="loginEmail" class="form-label">Email <span class="text-danger">*</span></label>
                         <input id="loginEmail" class="form-control" type="email" name="email" required>
