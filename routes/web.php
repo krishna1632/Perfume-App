@@ -52,6 +52,7 @@ Route::middleware('auth')->group(function () {
 // user Register management
 
 Route::get('/user_register', [UserProfileController::class, 'index'])->name('userregister.index');
-Route::get('/user_login', [UserProfileController::class, 'index1'])->name('userregister.login');
+Route::post('/user_register', [UserProfileController::class, 'store']);
+Route::get('/verify/otp', [UserProfileController::class, 'verifyOtp'])->name('verify.otp');
 
 require __DIR__ . '/auth.php';

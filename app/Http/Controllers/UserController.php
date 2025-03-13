@@ -16,7 +16,7 @@ class UserController extends Controller implements HasMiddleware
         return [
             new Middleware('permission:view users', only: ['index']),
             new Middleware('permission:edit users', only: ['edit']),
-            // new Middleware('permission:delete users', only: ['destroy']),
+            new Middleware('permission:delete users', only: ['destroy']),
         ];
     }
 
@@ -132,6 +132,11 @@ class UserController extends Controller implements HasMiddleware
 
         $user->delete();
 
-        return redirect()->route('user.list')->with('success', 'User deleted successfully.');
+        // Redirect based on role
+        if (auth()->user()->hasAnyRole(['Superadmin', 'Admin'])) {
+            return redirect()->route('user.list')->with('success', 'User deleted successfully.');
+        }
+
+        return redirect('/')->with('success', 'Your account has been deleted successfully.');
     }
 }

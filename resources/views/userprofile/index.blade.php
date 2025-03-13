@@ -245,7 +245,7 @@
                             <i class="bi bi-box-arrow-right"></i> Logout
                         </button>
                     </form>
-                    <form id="delete-form" method="POST" action="{{ route('profile.destroy') }}">
+                    <form id="delete-form" method="POST" action="{{ route('user.destroy', $user->id) }}">
                         @csrf
                         @method('DELETE')
                         <button type="button" class="btn btn-secondary w-100 mt-2 rounded-pill"

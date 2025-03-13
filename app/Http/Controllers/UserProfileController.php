@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\EmailOtpMail;
+use App\Models\EmailOtp;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\Rules\Password;
 
 class UserProfileController extends Controller
 {
@@ -13,10 +19,7 @@ class UserProfileController extends Controller
     {
         return view('userregister.index');
     }
-    public function index1()
-    {
-        return view('userregister.login');
-    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -31,7 +34,33 @@ class UserProfileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'password' => ['required', 'confirmed', Password::defaults()],
+        ]);
+
+        $otp = rand(1000, 9999);
+
+        EmailOtp::updateOrCreate(
+            [
+                'email' => $request->email,
+            ],
+            [
+                'email' => $request->email,
+                'otp' => $otp,
+                'expired_at' => Carbon::now()->addMinutes(10),
+            ]
+        );
+
+        Mail::to($request->email)->send(new EmailOtpMail($otp));
+
+        return redirect()->route('verify.otp');
+    }
+
+    public function verifyOtp()
+    {
+        // 
     }
 
     /**
